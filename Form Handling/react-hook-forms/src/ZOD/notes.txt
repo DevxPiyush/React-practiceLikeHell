@@ -1,0 +1,1 @@
+zod helps in validation of data passed via hook form in react, always when a data is passed via hhok form it gets registered but then during validation, custom logic is defined and vo custom logic code me daalne se code lengthy ho jata hai jis wajah se code ka bhosda ho jata hai so we use zod
