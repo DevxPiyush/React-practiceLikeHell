@@ -1,35 +1,46 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState } from "react";
+import Cards from "./Components/cards.jsx";
 
-function App() {
-  const [count, setCount] = useState(0)
+const App = () => {
+  const initialUsers = [
+    { id: 1, name: "Piyush", editing: false },
+    { id: 2, name: "Rohan", editing: false },
+    { id: 3, name: "Amit", editing: false },
+  ];
+
+  const [edit, setEdit] = useState(initialUsers);
+
+  // edit function
+  const handleedit = (id) => {
+    setEdit((previous) => {
+      return previous.map((item) =>
+        item.id === id
+          ? { ...item, editing: true }
+          : { ...item, editing: false },
+      );
+    });
+  };
+
+  // upon editing it is important to save as well
+  const handlesave = (id, newName) => {
+    setEdit((previous) =>
+      previous.map((item) =>
+        item.id === id ? { ...item, name: newName, editing: false } : item,
+      ),
+    );
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
-
-export default App
+    <div className={`flex items-center justify-center m-10`}>
+      {edit.map((item) => (
+        <Cards
+          values={item}
+          //   key={index}
+          handleedit={handleedit}
+          handlesave={handlesave}
+        />
+      ))}
+    </div>
+  );
+};
+export default App;
